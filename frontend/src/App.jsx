@@ -7,8 +7,6 @@
 // import SubscriptionPlans from "./pages/SubscribePlan";
 // import PlanCheckout from "./pages/PlanCheckout";
 
-
-
 // export default function App() {
 //   return (
 //     <>
@@ -32,7 +30,6 @@
 //   );
 // }
 
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import AuthPage from "./pages/Auth";
@@ -41,7 +38,7 @@ import ManageProfiles from "./pages/ManageButton";
 import ManageProfileForm from "./pages/ManageProfile";
 import SubscriptionPlans from "./pages/SubscribePlan";
 import PlanCheckout from "./pages/PlanCheckout";
-import ProtectedRoute from "./components/protectedRoutes"; 
+import ProtectedRoute from "./components/protectedRoutes";
 import ThemeInitializer from "./components/ThemeInitializer";
 import { MainLayout } from "./components/layout/MainLayout";
 import DisputeForm from "./pages/DisputeForm";
@@ -51,11 +48,12 @@ export default function App() {
   return (
     <>
       <Toaster position="top-center" />
-      <ThemeInitializer/>
+      <ThemeInitializer />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Navigate to="/auth/login" />} />
-        <Route path="/auth/:mode" element={<AuthPage />} />
+        <Route path="/auth/login" element={<AuthPage />} />
+        <Route path="/auth/signup" element={<AuthPage />} />
         <Route path="/auth/forgot-password" element={<AuthPage />} />
         <Route path="/auth/reset-password/:token" element={<AuthPage />} />
 
@@ -64,9 +62,9 @@ export default function App() {
           path="/dashboard"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <NewDashboard />
-            </ProtectedRoute>
+              <ProtectedRoute>
+                <NewDashboard />
+              </ProtectedRoute>
             </MainLayout>
           }
         />
@@ -74,19 +72,19 @@ export default function App() {
           path="/reportletter"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <GeneratedLetters />
-            </ProtectedRoute>
+              <ProtectedRoute>
+                <GeneratedLetters />
+              </ProtectedRoute>
             </MainLayout>
           }
         />
-         <Route
+        <Route
           path="/DisputeLetter"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <DisputeForm />
-            </ProtectedRoute>
+              <ProtectedRoute>
+                <DisputeForm />
+              </ProtectedRoute>
             </MainLayout>
           }
         />
@@ -95,9 +93,9 @@ export default function App() {
           path="/profiles"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <ManageProfiles />
-            </ProtectedRoute>
+              <ProtectedRoute>
+                <ManageProfiles />
+              </ProtectedRoute>
             </MainLayout>
           }
         />
@@ -106,9 +104,9 @@ export default function App() {
           path="/profiles/add"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <ManageProfileForm />
-            </ProtectedRoute>
+              <ProtectedRoute>
+                <ManageProfileForm />
+              </ProtectedRoute>
             </MainLayout>
           }
         />
@@ -117,11 +115,10 @@ export default function App() {
           path="/subscription"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <SubscriptionPlans />
-            </ProtectedRoute>
-              </MainLayout>
-
+              <ProtectedRoute>
+                <SubscriptionPlans />
+              </ProtectedRoute>
+            </MainLayout>
           }
         />
 
@@ -129,9 +126,9 @@ export default function App() {
           path="/plans/checkout/:id"
           element={
             <MainLayout>
-            <ProtectedRoute>
-              <PlanCheckout />
-            </ProtectedRoute>
+              <ProtectedRoute>
+                <PlanCheckout />
+              </ProtectedRoute>
             </MainLayout>
           }
         />
