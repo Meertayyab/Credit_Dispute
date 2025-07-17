@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://creditdisputebackend-production.up.railway.app/api",
   withCredentials: true,
 });
 
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/auth/refresh-token",
+          "https://creditdisputebackend-production.up.railway.app/api/auth/refresh-token",
           {},
           { withCredentials: true }
         );
