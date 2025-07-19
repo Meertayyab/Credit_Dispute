@@ -90,16 +90,17 @@
 //   );
 // }
 
+"use client";
+
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../components/AxiosInstance";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-
-import SkeletonLoader from "../components/skeletonLoader";
 
 export default function SubscriptionPlans() {
   const [plans, setPlans] = useState([]);
@@ -107,8 +108,8 @@ export default function SubscriptionPlans() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/plan")
+    axiosInstance
+      .get("/plan")
       .then((res) => {
         // simulate delay
         setTimeout(() => {
@@ -124,41 +125,57 @@ export default function SubscriptionPlans() {
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {loading ? (
-        <SkeletonLoader variant="card" count={3} /> // ✅ Correct variant and count
-      ) : (
-        plans.map((plan) => (
-          <Card key={plan._id} className="rounded-2xl shadow border">
-            <CardContent className="p-6 space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold">{plan.packageName}</h2>
-                <Badge>{plan.planType}</Badge>
-              </div>
-              <p className="text-3xl font-semibold text-purple-700">
-                ${plan.price} / month
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Service {plan.peopleLimit} people / month
-              </p>
-              <ul className="text-sm list-disc ml-4 space-y-1">
-                {plan.features.map((f, i) => (
-                  <li key={i}>{f}</li>
-                ))}
-              </ul>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    onClick={() => navigate(`/plans/checkout/${plan._id}`)}
-                    className="w-full mt-2"
-                  >
-                    Buy
-                  </Button>
-                </DialogTrigger>
-              </Dialog>
-            </CardContent>
-          </Card>
-        ))
-      )}
+      {loading
+        ? // Skeleton cards matching the actual card structure
+          Array.from({ length: 6 }).map((_, index) => (
+            <Card key={index} className="rounded-2xl shadow border">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-6 w-32" />
+                  <Skeleton className="h-5 w-16 rounded-full" />
+                </div>
+                <Skeleton className="h-8 w-40" />
+                <Skeleton className="h-4 w-48" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-5/6" />
+                </div>
+                <Skeleton className="h-10 w-full rounded-md" />
+              </CardContent>
+            </Card>
+          ))
+        : plans.map((plan) => (
+            <Card key={plan._id} className="rounded-2xl shadow border">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold">{plan.packageName}</h2>
+                  <Badge>{plan.planType}</Badge>
+                </div>
+                <p className="text-3xl font-semibold text-purple-700">
+                  ${plan.price} / month
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Service {plan.peopleLimit} people / month
+                </p>
+                <ul className="text-sm list-disc ml-4 space-y-1">
+                  {plan.features.map((f, i) => (
+                    <li key={i}>{f}</li>
+                  ))}
+                </ul>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      onClick={() => navigate(`/plans/checkout/${plan._id}`)}
+                      className="w-full mt-2"
+                    >
+                      Buy
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
+              </CardContent>
+            </Card>
+          ))}
     </div>
   );
 }

@@ -366,9 +366,9 @@ export default function AuthPage() {
         const { data } = await axiosInstance.post(endpoint, body);
 
         if (mode === "signup") {
-          toast.success("✅ Signup successful. Please check your email.");
+          toast.success(data.message);
         } else {
-          toast.success("✅ Login successful");
+          toast.success(data.message);
 
           const oneHourFromNow = Date.now() + 3600 * 1000;
           localStorage.setItem("token", data.accessToken);

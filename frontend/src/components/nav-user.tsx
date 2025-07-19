@@ -179,7 +179,7 @@ export function NavUser({
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    toast.success("Logout Successfully!")
+    toast.success("Logged out successfully")
     navigate("/auth/login");
   };
 
