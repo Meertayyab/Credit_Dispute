@@ -455,6 +455,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import SkeletonLoader from "../components/skeletonLoader";
+import axiosInstance from "../components/AxiosInstance";
 
 export default function ManageProfiles() {
   const navigate = useNavigate();
@@ -468,7 +469,7 @@ export default function ManageProfiles() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/profiles/getdata");
+      const res = await axiosInstance.get("/profiles/getdata");
       setData(res.data);
     } catch (err) {
       console.error(err);
@@ -490,7 +491,7 @@ export default function ManageProfiles() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/profiles/delete/${id}`);
+      await axiosInstance.delete(`/profiles/delete/${id}`);
       toast.success("🗑️ Profile deleted");
       fetchData();
     } catch (error) {

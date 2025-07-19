@@ -12,6 +12,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import axiosInstance from "../components/AxiosInstance";
 
 
 export default function ManageProfileForm() {
@@ -77,7 +78,7 @@ export default function ManageProfileForm() {
     files.otherDocs.forEach((doc) => payload.append("otherDocs", doc));
 
     try {
-      const res = await axios.post("http://localhost:5000/api/profiles/add", payload, {
+      const res = await axiosInstance.post("/profiles/add", payload, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("✅ Profile created successfully!");

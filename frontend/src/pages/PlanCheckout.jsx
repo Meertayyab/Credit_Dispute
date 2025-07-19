@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import SkeletonLoader from "../components/skeletonLoader";
+import axiosInstance from "../components/AxiosInstance";
 
 
 export default function PlanCheckout() {
@@ -28,8 +29,8 @@ export default function PlanCheckout() {
 
 
   useEffect(() => {
-  axios
-    .get(`http://localhost:5000/api/plan/${id}`)
+  axiosInstance
+    .get(`/plan/${id}`)
     .then((res) => {
       setPlan(res.data);
       setTimeout(() => setLoading(false), 1000); // Optional delay for smoother skeleton UX
@@ -48,7 +49,7 @@ export default function PlanCheckout() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/plans/subscribe", {
+      await axiosInstance.post("/plans/subscribe", {
         userId,
         packageName: plan.packageName,
         billingInfo: billing,
